@@ -1,88 +1,95 @@
 import java.util.Arrays;
 
+// A utility class that provides various mathematical and statistical operations
 class Calculator {
 
-    // Method to calculate the sum of two numbers
+    // Calculates the sum of the first two elements in the array
     int calculateSum(int[] numbers) {
         return numbers[0] + numbers[1];
     }
 
-    // Method to calculate the difference of two numbers
+    // Calculates the difference between the first two elements in the array
     int calculateDifference(int[] numbers) {
         return numbers[0] - numbers[1];
     }
 
-    // Method to calculate the product of two numbers
+    // Calculates the product of the first two elements in the array
     int calculateProduct(int[] numbers) {
         return numbers[0] * numbers[1];
     }
 
-    // Method to calculate the quotient of two numbers
+    // Calculates the quotient of the first two elements in the array
     double calculateQuotient(int[] numbers) {
         if (numbers[1] == 0) {
-            // Check for division by zero
-            System.out.println("Division by zero is not allowed.");
-            return Double.NaN;
+            // Prevent division by zero
+            throw new ArithmeticException("Cannot divide by zero.");
         }
         return (double) numbers[0] / numbers[1];
     }
 
-    // Method to calculate the square root of a number
+    // Calculates the square root of the given number
     double calculateSquareRoot(int number) {
         if (number < 0) {
-            // Check for negative input
-            System.out.println("Square root of a negative number is not allowed.");
-            return Double.NaN;
+            // Square root of a negative number is not defined in real numbers
+            throw new ArithmeticException("Cannot compute square root of a negative number.");
         }
         return Math.sqrt(number);
     }
 
-    // Method to generate the Fibonacci sequence for the given number of terms
+    // Generates and prints a Fibonacci sequence of the given number of terms
     void generateFibonacci(int terms) {
         if (terms <= 0) {
-            // Check for invalid input
-            System.out.println("Number of terms must be positive.");
-            return;
+            // Number of terms must be positive
+            throw new IllegalArgumentException("Number of terms must be positive.");
         }
+
         int a = 0, b = 1;
+
         System.out.print("Fibonacci Sequence: ");
         for (int i = 0; i < terms; i++) {
-            // Print the current term and calculate the next term
-            System.out.print(a + " ");
-            int next = a + b;
-            a = b;
+            System.out.print(a + " "); // Print the current term
+            int next = a + b;          // Calculate next term
+            a = b;                     // Shift values
             b = next;
         }
-        System.out.println();
+        System.out.println(); // Print newline at the end
     }
 
-    // Method to calculate the mean of an array
+    // Calculates and returns the mean (average) of elements in the array
     double calculateMean(int[] array) {
+        if (array.length == 0) {
+            // Mean of an empty array is undefined
+            throw new IllegalArgumentException("Array cannot be empty.");
+        }
+
         int sum = 0;
         for (int num : array) {
-            // Sum all elements in the array
             sum += num;
         }
+
         return (double) sum / array.length;
     }
 
-    // Method to calculate the mode of an array using sorting
+    // Calculates and returns the mode (most frequent element) of the array
     int calculateMode(int[] array) {
-        Arrays.sort(array); // Sort the array
+        if (array.length == 0) {
+            // Mode of an empty array is undefined
+            throw new IllegalArgumentException("Array cannot be empty.");
+        }
+
+        Arrays.sort(array); // Sort the array to simplify frequency counting
+
         int mode = array[0];
-        int currentCount = 1;
-        int maxCount = 1;
+        int currentCount = 1, maxCount = 1;
 
         for (int i = 1; i < array.length; i++) {
             if (array[i] == array[i - 1]) {
-                // Increment the count for the current number
-                currentCount++;
+                currentCount++; // Increase count if same as previous
             } else {
-                // Reset the count for a new number
-                currentCount = 1;
+                currentCount = 1; // Reset count
             }
 
-            // Update the mode if a higher count is found
+            // Update mode if current count is the highest seen so far
             if (currentCount > maxCount) {
                 maxCount = currentCount;
                 mode = array[i];
